@@ -1,7 +1,8 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../database/connection.js";
-import { productModel } from "./product.model.js";
+// import { productModel } from "./product.model.js";
 import { invoiceModel } from "./invoice.model.js";
+import { productModel } from "./product.model.js";
 
 export const invoiceDetailModel = sequelize.define(
   "invoiceDetail",
@@ -19,24 +20,29 @@ export const invoiceDetailModel = sequelize.define(
       type: DataTypes.FLOAT(10, 2),
       allowNull: false,
     },
+    total: {
+      type: DataTypes.FLOAT(10, 2),
+      allowNull: false,
+    }
   },
   {
     timestamps: false,
   }
 );
 
-invoiceDetailModel.hasMany(productModel, {
-  foreignKey: "productId",
-});
-
-productModel.belongsTo(invoiceDetailModel, {
-  foreignKey: "productId",
-});
 
 invoiceModel.hasMany(invoiceDetailModel, {
-  foreignKey: "invoiceNumber",
-});
+  foreignKey: "invoiceNumber"
+})
 
 invoiceDetailModel.belongsTo(invoiceModel, {
-  foreignKey: "invoiceNumber",
-});
+  foreignKey: "invoiceNumber"
+})
+
+productModel.hasMany(invoiceDetailModel, {
+  foreignKey: "productId"
+})
+
+invoiceDetailModel.belongsTo(productModel, {
+  foreignKey: "productId"
+})

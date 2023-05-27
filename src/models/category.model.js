@@ -20,10 +20,6 @@ export const categoryModel = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    productId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
   },
   {
     timestamps: false,
@@ -35,5 +31,5 @@ categoryModel.hasMany(productModel, {
 });
 
 productModel.belongsTo(categoryModel, {
-  foreignKey: "productId",
+  foreignKey: "categoryId",
 });

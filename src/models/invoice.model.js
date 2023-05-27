@@ -17,6 +17,10 @@ export const invoiceModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    totalInvoice: {
+      type: DataTypes.FLOAT(10, 2),
+      allowNull: false,
+    }
   },
   {
     timestamps: false,

@@ -1,4 +1,5 @@
 import { productModel } from "../models/product.model.js";
+import { createProductSchema } from "../schemas/product.schema.js";
 
 export const findAllProduct = async (req, res) => {
   try {
@@ -13,17 +14,15 @@ export const findAllProduct = async (req, res) => {
 };
 
 export const create = async (req, res) => {
-  const { productName, price, stock } = req.body;
+  const columns = req.body;
+
+  const validatedData = await createProductSchema.validateAsync(columns);
 
   try {
-    const products = await productModel.create({
-      productName,
-      price,
-      stock
-    });
+    const products = await productModel.create(validatedData);
 
     res.status(200).json({
-      msg: "Products created successfully!",
+      msg: "Product created successfully!",
       products,
     });
   } catch (error) {
@@ -40,7 +39,7 @@ export const deleteForId = async (req, res) => {
     if (products) res.status(200).json("Deleted!");
     else
       res.status(404).json({
-        msg: `Products with id "${productId} not found!"`,
+        msg: `Product with id "${productId} not found!"`,
       });
   } catch (error) {
     console.log(error);

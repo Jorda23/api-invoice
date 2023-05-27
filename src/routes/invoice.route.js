@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
   create,
-  deleteForId,
+  findOneInvoiceDetail,
   findAllInvoice,
 } from "../controllers/invoice.controller.js";
 
 const route = Router();
 
 route.get("/invoices", findAllInvoice);
+route.get("/invoice/:invoiceNumber", findOneInvoiceDetail);
 route.post("/invoice/create", create);
-route.delete("/invoice/:invoiceNumber", deleteForId);
 
 export default route;
